@@ -1,0 +1,139 @@
+﻿<Window x:Class="SortingVisualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingVisualizer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MinWidth="200" MaxWidth="250"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" >
+            <GroupBox Header="Animation" Padding="2, 6, 2, 2" DockPanel.Dock="Top">
+                <StackPanel>
+                    <!--Control buttons-->
+                    <Grid Margin="0,0,0,3" Height="60">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button x:Name="buttonPlay" Grid.Column="0" Grid.Row="0" Margin="0,0,3,3">Play</Button>
+                        <Button x:Name="buttonPause" Grid.Column="1" Grid.Row="0" Margin="3,0,0,3">Pause</Button>
+                        <Button x:Name="buttonReset" Grid.Column="1" Grid.Row="1" Margin="3,3,0,0">Reset</Button>
+                        <Button x:Name="buttonStep" Grid.Column="0" Grid.Row="1" Margin="0,3,3,0">Step</Button>
+                    </Grid>
+
+                    <!--Speed-->
+                    <Grid Margin="0, 6, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Speed:</Label>
+                        <Slider x:Name="sliderSpeed" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!--Delay-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Delay:</Label>
+                        <Label x:Name="labelDelay" Grid.Column="1" HorizontalAlignment="Right">XX ms</Label>
+                    </Grid>
+
+                    <!--Array Accesses-->
+                    <Grid Margin="0, 6, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Accesses:</Label>
+                        <Label x:Name="labelArrayAccesses" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                    </Grid>
+
+                    <!--Comparsions-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Comparsions:</Label>
+                        <Label x:Name="labelComparsions" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                    </Grid>
+
+                    <!--Swaps-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Writes:</Label>
+                        <Label x:Name="labelArrayWrites" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Input and Algorithm" Padding="2, 6, 2, 2">
+                <DockPanel>
+                    <!--Input Type-->
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="68"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Input Type:</Label>
+
+                        <ComboBox x:Name="comboBoxInputType" Grid.Column="1" HorizontalAlignment="Right" Width="115" SelectedIndex="2">
+                            <ComboBoxItem>Sorted</ComboBoxItem>
+                            <ComboBoxItem>Sorted (Reverse)</ComboBoxItem>
+                            <ComboBoxItem>Random Shuffle</ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+
+                    <!--Array Size-->
+                    <Grid Margin="0, 3, 0, 0" DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="68"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Size:</Label>
+
+                        <Slider 
+                        x:Name="sliderArraySize"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="10"
+                    />
+
+                        <Label x:Name="labelArraySize" Grid.Column="2" HorizontalAlignment="Right">1000</Label>
+                    </Grid>
+
+                    <ListBox x:Name="listBoxAlgorithms"/>
+                </DockPanel>
+            </GroupBox>
+        </DockPanel>
+
+        <Canvas x:Name="canvas" Grid.Column="1" Background="Black"/>
+    </Grid>
+</Window>
