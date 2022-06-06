@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using SortingVisualizer.InputTypes;
+
 
 namespace SortingVisualizer
 {
@@ -20,8 +22,11 @@ namespace SortingVisualizer
 
         private const string delayFormat = "{0:0} ms";
 
+        private InputType[] _inputTypes;
+
         private int _delay;
         private int _arraySize;
+        private InputType _inputType;
 
         public MainWindow()
         {
@@ -29,7 +34,9 @@ namespace SortingVisualizer
             
             InitializeSliders();
 
-            InitializeAlgorithmsList();
+            InitializeAlgorithms();
+
+            InitializeInputTypes();
             
             InitializeEvents();
         }
@@ -46,11 +53,30 @@ namespace SortingVisualizer
 
             sliderSpeed.ValueChanged += sliderSpeed_ValueChanged;
             sliderArraySize.ValueChanged += sliderArraySize_ValueChanged;
+
+            comboBoxInputType.SelectionChanged += ComboBoxInputType_SelectionChanged;
         }
 
-        private void InitializeAlgorithmsList()
+        private void InitializeAlgorithms()
         {
             // TODO: Inialize list box
+        }
+
+        private void InitializeInputTypes() 
+        {
+            _inputTypes = new InputType[]
+            {
+                InputType.Sorted,
+                InputType.Reversed,
+                InputType.RandomShuffle
+            };
+
+            comboBoxInputType.Items.Add("Sorted");
+            comboBoxInputType.Items.Add("Sorted (Reverse)");
+            comboBoxInputType.Items.Add("Random Shuffle");
+
+            comboBoxInputType.SelectedIndex = 0;
+            _inputType = _inputTypes[0];
         }
 
         private void InitializeSliders() 
@@ -116,6 +142,18 @@ namespace SortingVisualizer
 
             _arraySize = (int)slider.Value;
             labelArraySize.Content = _arraySize;
+        }
+
+        private void ComboBoxInputType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+
+            if (sender is null) 
+            {
+                throw new ArgumentNullException(nameof(sender), $"{nameof(sender)} must not be null.");
+            }
+
+            _inputType = _inputTypes[comboBox.SelectedIndex];
         }
     }
 }
