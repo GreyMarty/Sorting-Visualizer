@@ -43,10 +43,10 @@ namespace SortingVisualizer
             InitializeAlgorithms();
 
             InitializeInputTypes();
-            
-            InitializeEvents();
 
             _controller = new VisualizationController(new SimpleCanvasVisualizer(canvas), _sorter);
+            
+            InitializeEvents();
         }
 
         private void InitializeEvents() 
@@ -64,6 +64,8 @@ namespace SortingVisualizer
 
             comboBoxInputType.SelectionChanged += comboBoxInputType_SelectionChanged;
             listBoxAlgorithms.SelectionChanged += listBoxAlgorithms_SelectionChanged;
+
+            _controller.StateChanged += _controller_StateChanged;
         }
 
         private void InitializeAlgorithms()
@@ -184,6 +186,23 @@ namespace SortingVisualizer
             }
 
             _sorter = _sorters[listBox.SelectedIndex];
+        }
+
+        private void _controller_StateChanged(object sender, EventArgs e)
+        {
+            VisualizationController controller = (VisualizationController)sender;
+
+            if (sender is null) 
+            {
+                throw new ArgumentNullException(nameof(sender), $"{nameof(sender)} must not be null.");
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                labelArrayAccesses.Content = controller.ArrayAccesses;
+                labelComparsions.Content = controller.Comparsions;
+                labelArrayWrites.Content = controller.ArrayWrites;
+            });
         }
     }
 }
