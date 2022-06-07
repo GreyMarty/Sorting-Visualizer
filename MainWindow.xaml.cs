@@ -86,12 +86,16 @@ namespace SortingVisualizer
             {
                 InputType.Sorted,
                 InputType.Reversed,
-                InputType.RandomShuffle
+                InputType.RandomShuffle,
+                InputType.SortedStart,
+                InputType.SortedEnd
             };
 
             comboBoxInputType.Items.Add("Sorted");
             comboBoxInputType.Items.Add("Sorted (Reverse)");
             comboBoxInputType.Items.Add("Random Shuffle");
+            comboBoxInputType.Items.Add("Sorted Start");
+            comboBoxInputType.Items.Add("Sorted End");
 
             comboBoxInputType.SelectedIndex = 0;
             _inputType = _inputTypes[0];
