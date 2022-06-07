@@ -4,6 +4,7 @@ using System.Windows.Controls;
 
 using SortingVisualizer.InputTypes;
 using SortingVisualizer.Visualization;
+using SortingVisualizer.Sorting;
 
 
 namespace SortingVisualizer
@@ -24,10 +25,12 @@ namespace SortingVisualizer
         private const string delayFormat = "{0:0} ms";
 
         private InputType[] _inputTypes;
+        private ISorter[] _sorters;
 
         private int _delay;
         private int _arraySize;
         private InputType _inputType;
+        private ISorter _sorter;
 
         private VisualizationController _controller;
 
@@ -43,7 +46,7 @@ namespace SortingVisualizer
             
             InitializeEvents();
 
-            _controller = new VisualizationController(new SimpleCanvasVisualizer(canvas), null);
+            _controller = new VisualizationController(new SimpleCanvasVisualizer(canvas), _sorter);
         }
 
         private void InitializeEvents() 
@@ -59,12 +62,21 @@ namespace SortingVisualizer
             sliderSpeed.ValueChanged += sliderSpeed_ValueChanged;
             sliderArraySize.ValueChanged += sliderArraySize_ValueChanged;
 
-            comboBoxInputType.SelectionChanged += ComboBoxInputType_SelectionChanged;
+            comboBoxInputType.SelectionChanged += comboBoxInputType_SelectionChanged;
+            listBoxAlgorithms.SelectionChanged += listBoxAlgorithms_SelectionChanged;
         }
 
         private void InitializeAlgorithms()
         {
-            // TODO: Inialize list box
+            _sorters = new ISorter[]
+            {
+                new BubbleSort()
+            };
+
+            listBoxAlgorithms.Items.Add("Bubble Sort");
+
+            listBoxAlgorithms.SelectedIndex = 0;
+            _sorter = _sorters[0];
         }
 
         private void InitializeInputTypes() 
@@ -115,7 +127,7 @@ namespace SortingVisualizer
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            _controller.Reset(_arraySize, _inputType);
+            _controller.Reset(_arraySize, _inputType, _sorter);
         }
 
         private void buttonStep_Click(object sender, EventArgs e)
@@ -150,7 +162,7 @@ namespace SortingVisualizer
             labelArraySize.Content = _arraySize;
         }
 
-        private void ComboBoxInputType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void comboBoxInputType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
 
@@ -160,6 +172,18 @@ namespace SortingVisualizer
             }
 
             _inputType = _inputTypes[comboBox.SelectedIndex];
+        }
+
+        private void listBoxAlgorithms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox listBox = (ListBox)sender;
+
+            if (sender is null) 
+            {
+                throw new ArgumentNullException(nameof(sender), $"{nameof(sender)} must not be null.");
+            }
+
+            _sorter = _sorters[listBox.SelectedIndex];
         }
     }
 }
