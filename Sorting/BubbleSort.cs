@@ -14,6 +14,8 @@ namespace SortingVisualizer.Sorting
                     step.AccessedIndices.Add(j);
                     step.AccessedIndices.Add(j + 1);
 
+                    step.Comparsions++;
+
                     if (array[j] > array[j + 1])
                     {
                         step.ChangedIndices.Add(j);

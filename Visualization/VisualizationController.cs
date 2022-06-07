@@ -21,6 +21,7 @@ namespace SortingVisualizer.Visualization
         public int Delay { get; set; }
 
         public int ArrayAccesses { get; private set; } = 0;
+        public int Comparsions { get; private set; } = 0;
         public int ArrayWrites { get; private set; } = 0;
 
         public event EventHandler StateChanged;
@@ -53,6 +54,7 @@ namespace SortingVisualizer.Visualization
             _sortEnumerator = null;
 
             ArrayAccesses = 0;
+            Comparsions = 0;
             ArrayWrites = 0;
             StateChanged?.Invoke(this, EventArgs.Empty);
 
@@ -113,6 +115,7 @@ namespace SortingVisualizer.Visualization
                 Visualizer.Visualize(sortStep);
 
                 ArrayAccesses += sortStep.ArrayAccesses;
+                Comparsions += sortStep.Comparsions;
                 ArrayWrites += sortStep.ArrayWrites;
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -154,6 +157,7 @@ namespace SortingVisualizer.Visualization
                 Visualizer.Visualize(sortStep);
 
                 ArrayAccesses += sortStep.ArrayAccesses;
+                Comparsions += sortStep.Comparsions;
                 ArrayWrites += sortStep.ArrayWrites;
                 StateChanged?.Invoke(this, EventArgs.Empty);
 

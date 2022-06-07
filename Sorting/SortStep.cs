@@ -14,6 +14,7 @@ namespace SortingVisualizer.Sorting
 
         public int ArrayAccesses => AccessedIndices.Count + ChangedIndices.Count;
         public int ArrayWrites => ChangedIndices.Count;
+        public int Comparsions { get; set; }
 
         public SortStep(int[] array)
         {
