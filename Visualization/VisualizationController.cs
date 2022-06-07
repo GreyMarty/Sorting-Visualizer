@@ -38,6 +38,8 @@ namespace SortingVisualizer.Visualization
             Visualizer = vizualizer;
             Sorter = sorter;
 
+            _array = new int[0];
+
             _visualizationStopEvent = new ManualResetEvent(false);
         }
 
