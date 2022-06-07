@@ -5,18 +5,16 @@ namespace SortingVisualizer.InputTypes
 {
     public class InputTypeSorted : InputType
     {
-        public override void Generate<T>(T[] array)
+        public override void Generate(int[] array)
         {
-            Type type = typeof(T);
-
-            if (type != typeof(int) && type != typeof(float) && type != typeof(double))
+            if (array is null) 
             {
-                throw new InvalidConstraintException($"{type} is not supported!");
+                throw new ArgumentNullException(nameof(array), $"{nameof(array)} must not be null.");
             }
 
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = (T)Convert.ChangeType(i + 1, type);
+                array[i] = i + 1;
             }
         }
     }

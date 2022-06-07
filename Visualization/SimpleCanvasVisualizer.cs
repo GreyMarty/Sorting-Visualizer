@@ -1,9 +1,10 @@
-﻿using SortingVisualizer.Sorting;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Shapes;
+using SortingVisualizer.Sorting;
 
 namespace SortingVisualizer.Visualization
 {

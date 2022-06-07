@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using SortingVisualizer.InputTypes;
+using SortingVisualizer.Visualization;
 
 
 namespace SortingVisualizer
@@ -28,6 +29,8 @@ namespace SortingVisualizer
         private int _arraySize;
         private InputType _inputType;
 
+        private VisualizationController _controller;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +42,8 @@ namespace SortingVisualizer
             InitializeInputTypes();
             
             InitializeEvents();
+
+            _controller = new VisualizationController(new SimpleCanvasVisualizer(canvas), null);
         }
 
         private void InitializeEvents() 
@@ -96,26 +101,26 @@ namespace SortingVisualizer
 
         private void MainWindow_SizeChanged(object sender, EventArgs e)
         {
-            // TODO: Redraw array
+            _controller.Redraw();
         }
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            // TODO: Start animation
+            _controller.Run();
         }
         private void ButtonPause_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Pause animation
+            _controller.Pause();
         }
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            // TODO: Stop animation and reset array
+            _controller.Reset(_arraySize, _inputType);
         }
 
         private void buttonStep_Click(object sender, EventArgs e)
         {
-            // TODO: Proceed animation one step forward
+            _controller.Step();
         }
 
         private void sliderSpeed_ValueChanged(object sender, EventArgs e)
@@ -128,6 +133,7 @@ namespace SortingVisualizer
             }
 
             _delay = (int)((MaxSpeed - slider.Value) * (MaxDelay - MinDelay) / (MaxSpeed - MinSpeed) + MinDelay);
+            _controller.Delay = _delay;
             labelDelay.Content = string.Format(delayFormat, _delay);
         }
 

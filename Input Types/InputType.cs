@@ -13,6 +13,6 @@ namespace SortingVisualizer.InputTypes
         public static InputType Reversed => new InputTypeReversed();
         public static InputType RandomShuffle => new InputTypeRandomShuffle();
 
-        public abstract void Generate<T>(T[] array);
+        public abstract void Generate(int[] array);
     }
 }
