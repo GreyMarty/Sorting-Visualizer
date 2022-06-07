@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using System.Windows.Shapes;
 using SortingVisualizer.Sorting;
 
+
 namespace SortingVisualizer.Visualization
 {
     /// <summary>

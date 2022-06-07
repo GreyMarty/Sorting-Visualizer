@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-
 using SortingVisualizer.InputTypes;
 using SortingVisualizer.Visualization;
 using SortingVisualizer.Sorting;

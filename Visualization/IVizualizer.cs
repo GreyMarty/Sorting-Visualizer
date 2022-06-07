@@ -1,5 +1,6 @@
 ﻿using SortingVisualizer.Sorting;
 
+
 namespace SortingVisualizer.Visualization
 {
     /// <summary>
