@@ -125,13 +125,13 @@ namespace SortingVisualizer.Visualization
         {
             if (_sortEnumerator?.Current is not null) 
             {
-                Visualizer.Visualize(_sortEnumerator.Current);
+                Visualizer.Visualize(_sortEnumerator.Current, true);
                 return;
             }
 
             if (_array is not null)
             {
-                Visualizer.Visualize(_array);
+                Visualizer.Visualize(_array, true);
             }
         }
 
