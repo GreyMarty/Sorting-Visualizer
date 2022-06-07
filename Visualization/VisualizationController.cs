@@ -20,6 +20,11 @@ namespace SortingVisualizer.Visualization
 
         public int Delay { get; set; }
 
+        public int ArrayAccesses { get; private set; } = 0;
+        public int ArrayWrites { get; private set; } = 0;
+
+        public event EventHandler StateChanged;
+
         private int[] _array;
         private IEnumerator<SortStep>? _sortEnumerator;
 
@@ -46,6 +51,10 @@ namespace SortingVisualizer.Visualization
             inputType.Generate(_array);
 
             _sortEnumerator = null;
+
+            ArrayAccesses = 0;
+            ArrayWrites = 0;
+            StateChanged?.Invoke(this, EventArgs.Empty);
 
             Redraw();
         }
@@ -99,7 +108,13 @@ namespace SortingVisualizer.Visualization
 
             if (_sortEnumerator.MoveNext()) 
             {
-                Visualizer.Visualize(_sortEnumerator.Current);
+                SortStep sortStep = _sortEnumerator.Current;
+
+                Visualizer.Visualize(sortStep);
+
+                ArrayAccesses += sortStep.ArrayAccesses;
+                ArrayWrites += sortStep.ArrayWrites;
+                StateChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -134,7 +149,13 @@ namespace SortingVisualizer.Visualization
 
                 stopwatch.Reset();
 
-                Visualizer.Visualize(_sortEnumerator.Current);
+                SortStep sortStep = _sortEnumerator.Current;
+
+                Visualizer.Visualize(sortStep);
+
+                ArrayAccesses += sortStep.ArrayAccesses;
+                ArrayWrites += sortStep.ArrayWrites;
+                StateChanged?.Invoke(this, EventArgs.Empty);
 
                 stopwatch.Stop();
             }
