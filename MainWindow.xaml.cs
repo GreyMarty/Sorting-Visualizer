@@ -110,7 +110,7 @@ namespace SortingVisualizer
         {
             GLWpfControlSettings settings = new GLWpfControlSettings
             {
-                MajorVersion = 3,
+                MajorVersion = 4,
                 MinorVersion = 3,
                 RenderContinuously = false
             };

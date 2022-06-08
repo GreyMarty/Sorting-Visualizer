@@ -13,4 +13,16 @@
     <PackageReference Include="OpenTK.GLWpfControl" Version="4.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Shaders\default.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shaders\default.geom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shaders\default.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
