@@ -71,10 +71,16 @@ namespace SortingVisualizer
         {
             _sorters = new ISorter[]
             {
-                new BubbleSort()
+                Sorters.BubbleSort,
+                Sorters.SelectionSort,
+                Sorters.InsertionSort,
+                Sorters.RadixSort
             };
 
             listBoxAlgorithms.Items.Add("Bubble Sort");
+            listBoxAlgorithms.Items.Add("Selection Sort");
+            listBoxAlgorithms.Items.Add("Insertion Sort");
+            listBoxAlgorithms.Items.Add("Radix Sort");
 
             listBoxAlgorithms.SelectedIndex = 0;
             _sorter = _sorters[0];
