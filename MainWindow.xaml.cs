@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using SortingVisualizer.InputTypes;
 using SortingVisualizer.Visualization;
 using SortingVisualizer.Sorting;
+using OpenTK.Wpf;
 
 
 namespace SortingVisualizer
@@ -36,37 +37,28 @@ namespace SortingVisualizer
         public MainWindow()
         {
             InitializeComponent();
-            
+
             InitializeSliders();
 
             InitializeAlgorithms();
 
             InitializeInputTypes();
-
-            _controller = new VisualizationController(new SimpleCanvasVisualizer(canvas), _sorter);
             
+            InitializeOpenGL();
+
+            InitializeController();
+
             InitializeEvents();
         }
-
-        private void InitializeEvents() 
+        private void InitializeSliders() 
         {
-            Loaded += MainWindow_Load;
-            SizeChanged += MainWindow_SizeChanged;
+            sliderSpeed.Minimum = MinSpeed;
+            sliderSpeed.Maximum = MaxSpeed;
 
-            buttonPlay.Click += buttonPlay_Click;
-            buttonPause.Click += ButtonPause_Click;
-            buttonStep.Click += buttonStep_Click;
-            buttonReset.Click += buttonReset_Click;
-
-            sliderSpeed.ValueChanged += sliderSpeed_ValueChanged;
-            sliderArraySize.ValueChanged += sliderArraySize_ValueChanged;
-
-            comboBoxInputType.SelectionChanged += comboBoxInputType_SelectionChanged;
-            listBoxAlgorithms.SelectionChanged += listBoxAlgorithms_SelectionChanged;
-
-            _controller.StateChanged += _controller_StateChanged;
+            sliderArraySize.Minimum = MinArraySize;
+            sliderArraySize.Maximum = MaxArraySize;
         }
-
+        
         private void InitializeAlgorithms()
         {
             _sorters = new ISorter[]
@@ -87,7 +79,7 @@ namespace SortingVisualizer
             listBoxAlgorithms.SelectedIndex = 0;
             _sorter = _sorters[0];
         }
-
+        
         private void InitializeInputTypes() 
         {
             _inputTypes = new InputType[]
@@ -109,13 +101,40 @@ namespace SortingVisualizer
             _inputType = _inputTypes[0];
         }
 
-        private void InitializeSliders() 
+        private void InitializeController() 
         {
-            sliderSpeed.Minimum = MinSpeed;
-            sliderSpeed.Maximum = MaxSpeed;
+            _controller = new VisualizationController(new OpenGLVisualizer(glControl), _sorter);
+        }
 
-            sliderArraySize.Minimum = MinArraySize;
-            sliderArraySize.Maximum = MaxArraySize;
+        private void InitializeOpenGL() 
+        {
+            GLWpfControlSettings settings = new GLWpfControlSettings
+            {
+                MajorVersion = 3,
+                MinorVersion = 3,
+                RenderContinuously = false
+            };
+
+            glControl.Start(settings);
+        }
+
+        private void InitializeEvents() 
+        {
+            Loaded += MainWindow_Load;
+            SizeChanged += MainWindow_SizeChanged;
+
+            buttonPlay.Click += buttonPlay_Click;
+            buttonPause.Click += ButtonPause_Click;
+            buttonStep.Click += buttonStep_Click;
+            buttonReset.Click += buttonReset_Click;
+
+            sliderSpeed.ValueChanged += sliderSpeed_ValueChanged;
+            sliderArraySize.ValueChanged += sliderArraySize_ValueChanged;
+
+            comboBoxInputType.SelectionChanged += comboBoxInputType_SelectionChanged;
+            listBoxAlgorithms.SelectionChanged += listBoxAlgorithms_SelectionChanged;
+
+            _controller.StateChanged += _controller_StateChanged;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)

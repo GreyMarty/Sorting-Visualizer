@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SortingVisualizer"
+        xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -130,6 +131,6 @@
             </GroupBox>
         </DockPanel>
 
-        <Canvas x:Name="canvas" Grid.Column="1" Background="Black"/>
+        <glWpfControl:GLWpfControl x:Name="glControl" Grid.Column="1"/>
     </Grid>
 </Window>

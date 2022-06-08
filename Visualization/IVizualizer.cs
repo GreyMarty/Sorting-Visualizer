@@ -8,8 +8,8 @@ namespace SortingVisualizer.Visualization
     /// </summary>
     public interface IVizualizer
     {
-        public void Visualize(int[] array, bool forceRedraw = false);
+        public void Visualize(int[] array);
 
-        public void Visualize(SortStep sortState, bool forceRedraw = false);
+        public void Visualize(SortStep sortState);
     }
 }

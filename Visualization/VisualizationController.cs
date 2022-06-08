@@ -25,7 +25,7 @@ namespace SortingVisualizer.Visualization
         public event EventHandler StateChanged;
 
         private int[] _array;
-        private IEnumerator<SortStep>? _sortEnumerator;
+        private IEnumerator<SortStep> _sortEnumerator;
 
         private bool _isRunning = false;
         private Thread _visualizationThread;
@@ -50,7 +50,6 @@ namespace SortingVisualizer.Visualization
 
             _array = new int[arraySize];
             inputType.Generate(_array);
-
             _sortEnumerator = null;
 
             ArrayAccesses = 0;
@@ -128,13 +127,13 @@ namespace SortingVisualizer.Visualization
         {
             if (_sortEnumerator?.Current is not null) 
             {
-                Visualizer.Visualize(_sortEnumerator.Current, true);
+                Visualizer.Visualize(_sortEnumerator.Current);
                 return;
             }
 
             if (_array is not null)
             {
-                Visualizer.Visualize(_array, true);
+                Visualizer.Visualize(_array);
             }
         }
 
