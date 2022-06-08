@@ -108,11 +108,11 @@ namespace SortingVisualizer.Visualization
 
             _sortEnumerator = _sortEnumerator ?? Sorter.Sort(_array);
 
-            if (_sortEnumerator.MoveNext()) 
+            if (_sortEnumerator.MoveNext())
             {
                 SortStep sortStep = _sortEnumerator.Current;
 
-                Visualizer.Visualize(sortStep);
+                DrawStep(sortStep);
 
                 ArrayAccesses += sortStep.ArrayAccesses;
                 Comparsions += sortStep.Comparsions;
@@ -138,6 +138,11 @@ namespace SortingVisualizer.Visualization
             }
         }
 
+        private void DrawStep(SortStep sortStep) 
+        {
+            Visualizer.Visualize(sortStep);
+        }
+
         private void ThreadRun() 
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -154,7 +159,7 @@ namespace SortingVisualizer.Visualization
 
                 SortStep sortStep = _sortEnumerator.Current;
 
-                Visualizer.Visualize(sortStep);
+                DrawStep(sortStep);
 
                 ArrayAccesses += sortStep.ArrayAccesses;
                 Comparsions += sortStep.Comparsions;
