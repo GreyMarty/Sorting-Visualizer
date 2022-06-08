@@ -74,12 +74,14 @@ namespace SortingVisualizer
                 Sorters.BubbleSort,
                 Sorters.SelectionSort,
                 Sorters.InsertionSort,
+                Sorters.MergeSort,
                 Sorters.RadixSort
             };
 
             listBoxAlgorithms.Items.Add("Bubble Sort");
             listBoxAlgorithms.Items.Add("Selection Sort");
             listBoxAlgorithms.Items.Add("Insertion Sort");
+            listBoxAlgorithms.Items.Add("Merge Sort");
             listBoxAlgorithms.Items.Add("Radix Sort");
 
             listBoxAlgorithms.SelectedIndex = 0;
