@@ -67,14 +67,20 @@ namespace SortingVisualizer
                 Sorters.SelectionSort,
                 Sorters.InsertionSort,
                 Sorters.MergeSort,
-                Sorters.RadixSort
+                Sorters.MergeSortIterative,
+                Sorters.RadixSort,
+                Sorters.QuickSort,
+                Sorters.HoareQuickSort
             };
 
             listBoxAlgorithms.Items.Add("Bubble Sort");
             listBoxAlgorithms.Items.Add("Selection Sort");
             listBoxAlgorithms.Items.Add("Insertion Sort");
             listBoxAlgorithms.Items.Add("Merge Sort");
+            listBoxAlgorithms.Items.Add("Merge Sort (Iterative)");
             listBoxAlgorithms.Items.Add("Radix Sort");
+            listBoxAlgorithms.Items.Add("Quick Sort");
+            listBoxAlgorithms.Items.Add("Hoare's Quick Sort");
 
             listBoxAlgorithms.SelectedIndex = 0;
             _sorter = _sorters[0];
