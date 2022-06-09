@@ -234,8 +234,6 @@ namespace SortingVisualizer.Visualization
 
                 DrawStep(sortStep);
 
-                StateChanged?.Invoke(this, EventArgs.Empty);
-
                 stopwatch.Stop();
             }
 
