@@ -88,7 +88,8 @@ namespace SortingVisualizer
                 InputType.Reversed,
                 InputType.RandomShuffle,
                 InputType.ShuffledTail,
-                InputType.ShuffledHead
+                InputType.ShuffledHead,
+                InputType.AlmostSorted
             };
 
             comboBoxInputType.Items.Add("Sorted");
@@ -96,6 +97,7 @@ namespace SortingVisualizer
             comboBoxInputType.Items.Add("Random Shuffle");
             comboBoxInputType.Items.Add("Shuffled Tail");
             comboBoxInputType.Items.Add("Shuffled Head");
+            comboBoxInputType.Items.Add("Almost Sorted");
 
             comboBoxInputType.SelectedIndex = 0;
             _inputType = _inputTypes[0];

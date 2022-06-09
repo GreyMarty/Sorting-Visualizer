@@ -7,6 +7,7 @@
         public static InputType RandomShuffle => new InputTypeRandomShuffle();
         public static InputType ShuffledTail => new InputTypeShuffledTail();
         public static InputType ShuffledHead => new InputTypeShuffledHead();
+        public static InputType AlmostSorted => new InputTypeAlmostSorted();
 
         /// <summary>
         /// Fills array in a certain way
