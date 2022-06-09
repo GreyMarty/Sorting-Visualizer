@@ -31,6 +31,8 @@ namespace SortingVisualizer.Visualization
         private Thread _visualizationThread;
         private ManualResetEvent _visualizationStopEvent;
 
+        private const int TargetArraySize = 512;
+
         public VisualizationController(IVizualizer vizualizer, ISorter sorter)
         {
             Visualizer = vizualizer;
@@ -156,17 +158,37 @@ namespace SortingVisualizer.Visualization
 
                 stopwatch.Reset();
 
-                SortStep sortStep = _sortEnumerator.Current;
+                int stepCount = _array.Length < TargetArraySize ? 1 : _array.Length / TargetArraySize;
+
+                SortStep sortStep = new SortStep(_array);
+
+                for (int i = 0; i < stepCount; i++) 
+                {
+                    foreach (int index in _sortEnumerator.Current.AccessedIndices) 
+                    {
+                        sortStep.AccessedIndices.Add(index);
+                    }
+
+                    foreach (int index in _sortEnumerator.Current.ChangedIndices)
+                    {
+                        sortStep.ChangedIndices.Add(index);
+                    }
+
+                    ArrayAccesses += _sortEnumerator.Current.ArrayAccesses;
+                    Comparsions += _sortEnumerator.Current.Comparsions;
+                    ArrayWrites += _sortEnumerator.Current.ArrayWrites;
+
+                    _sortEnumerator.MoveNext();
+                }
 
                 DrawStep(sortStep);
 
-                ArrayAccesses += sortStep.ArrayAccesses;
-                Comparsions += sortStep.Comparsions;
-                ArrayWrites += sortStep.ArrayWrites;
                 StateChanged?.Invoke(this, EventArgs.Empty);
 
                 stopwatch.Stop();
             }
+
+            DrawStep(_sortEnumerator.Current);
 
             _isRunning = false;
         }
