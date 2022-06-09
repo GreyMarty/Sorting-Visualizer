@@ -16,11 +16,11 @@ namespace SortingVisualizer
     {
         private const int MinSpeed = 0;
         private const int MaxSpeed = 1000;
-        private const float MinDelay = 5f;
-        private const float MaxDelay = 1000f;
+        private const float MinDelay = 1f;
+        private const float MaxDelay = 500f;
 
-        private const int MinArraySize = 10;
-        private const int MaxArraySize = 1000;
+        private const int MinArraySize = 16;
+        private const int MaxArraySize = 2048;
 
         private const string delayFormat = "{0:0} ms";
 
