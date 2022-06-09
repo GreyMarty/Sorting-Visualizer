@@ -154,11 +154,12 @@ namespace SortingVisualizer.Visualization
             Stopwatch stopwatch = new Stopwatch();
             _isRunning = true;
 
-            while (_isRunning && _sortEnumerator.MoveNext()) 
+            while (_isRunning && (_sortEnumerator?.MoveNext() ?? false)) 
             {
                 if (_visualizationStopEvent.WaitOne(Math.Max(0, Delay - (int)stopwatch.ElapsedMilliseconds))) 
                 {
-                    break;
+                    _isRunning = false;
+                    return;
                 }
 
                 stopwatch.Reset();
