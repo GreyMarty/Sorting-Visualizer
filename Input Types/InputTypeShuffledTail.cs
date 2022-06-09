@@ -3,11 +3,11 @@
 
 namespace SortingVisualizer.InputTypes
 {
-    public class InputTypeSortedEnd : InputType
+    public class InputTypeShuffledTail : InputType
     {
         public override void Generate(int[] array)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++) 
             {
                 array[i] = i + 1;
             }
@@ -15,9 +15,9 @@ namespace SortingVisualizer.InputTypes
             int mid = array.Length / 2;
             Random random = new Random();
 
-            for (int i = 0; i < mid; i++)
+            for (int i = mid; i < array.Length; i++) 
             {
-                int swapIndex = random.Next(0, mid);
+                int swapIndex = random.Next(mid, array.Length);
 
                 int temp = array[i];
                 array[i] = array[swapIndex];
