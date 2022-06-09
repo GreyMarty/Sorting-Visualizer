@@ -146,10 +146,15 @@ namespace SortingVisualizer.Visualization
 
         private void ThreadRun() 
         {
+            if (_sortEnumerator is null) 
+            {
+                return;
+            }
+
             Stopwatch stopwatch = new Stopwatch();
             _isRunning = true;
 
-            while (_isRunning && (_sortEnumerator?.MoveNext() ?? false)) 
+            while (_isRunning && _sortEnumerator.MoveNext()) 
             {
                 if (_visualizationStopEvent.WaitOne(Math.Max(0, Delay - (int)stopwatch.ElapsedMilliseconds))) 
                 {
@@ -188,7 +193,50 @@ namespace SortingVisualizer.Visualization
                 stopwatch.Stop();
             }
 
-            DrawStep(_sortEnumerator.Current);
+            RunFinishAnimation();
+
+            _isRunning = false;
+        }
+
+        private void RunFinishAnimation() 
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            _isRunning = true;
+
+            SortStep sortStep = new SortStep(_array);
+            int arrayIndex = 0;
+
+            while (_isRunning && arrayIndex < _array.Length)
+            {
+                if (_visualizationStopEvent.WaitOne(Math.Max(0, Delay - (int)stopwatch.ElapsedMilliseconds)))
+                {
+                    break;
+                }
+
+                stopwatch.Reset();
+
+                int stepCount = _array.Length < TargetArraySize ? 1 : _array.Length / TargetArraySize;
+
+                foreach (int index in sortStep.ChangedIndices) 
+                {
+                    sortStep.AccessedIndices.Add(index);
+                }
+
+                sortStep.ChangedIndices.Clear();
+
+                for (int i = 0; i < stepCount && arrayIndex + i < _array.Length; i++)
+                {
+                    sortStep.ChangedIndices.Add(arrayIndex + i);
+                }
+
+                arrayIndex += stepCount;
+
+                DrawStep(sortStep);
+
+                StateChanged?.Invoke(this, EventArgs.Empty);
+
+                stopwatch.Stop();
+            }
 
             _isRunning = false;
         }
