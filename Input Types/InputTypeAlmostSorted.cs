@@ -3,7 +3,7 @@
 
 namespace SortingVisualizer.InputTypes
 {
-    internal class InputTypeAlmostSorted : InputType
+    internal class InputTypeAlmostSorted : ArrayInputType
     {
         public override void Generate(int[] array)
         {

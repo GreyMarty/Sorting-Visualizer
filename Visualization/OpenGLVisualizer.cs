@@ -34,7 +34,7 @@ namespace SortingVisualizer.Visualization
 
             if (glControl.IsLoaded)
             {
-                GLControl_Loaded(GLControl, (RoutedEventArgs)EventArgs.Empty);
+                GLControl_Loaded(GLControl, null);
             }
         }
 

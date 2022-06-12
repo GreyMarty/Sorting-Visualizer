@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0" >
-            <GroupBox Header="Animation" Padding="2, 6, 2, 2" DockPanel.Dock="Top">
+            <GroupBox Padding="2, 6, 2, 2" DockPanel.Dock="Top" Header="Animation">
                 <StackPanel>
                     <!--Control buttons-->
                     <Grid Margin="0,0,0,3" Height="60">
@@ -28,10 +28,29 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Button x:Name="buttonPlay" Grid.Column="0" Grid.Row="0" Margin="0,0,3,3">Play</Button>
-                        <Button x:Name="buttonPause" Grid.Column="1" Grid.Row="0" Margin="3,0,0,3">Pause</Button>
-                        <Button x:Name="buttonReset" Grid.Column="1" Grid.Row="1" Margin="3,3,0,0">Reset</Button>
-                        <Button x:Name="buttonStep" Grid.Column="0" Grid.Row="1" Margin="0,3,3,0">Step</Button>
+                        <Button Grid.Column="0" 
+                                Grid.Row="0" 
+                                Margin="0,0,3,3"
+                                Command="{Binding Path=PlayCommand}"
+                                Content="Play"/>
+
+                        <Button Grid.Column="1" 
+                                Grid.Row="0"
+                                Margin="3,0,0,3"
+                                Command="{Binding Path=PauseCommand}"
+                                Content="Pause"/>
+
+                        <Button Grid.Column="0"
+                                Grid.Row="1"
+                                Margin="0,3,3,0"
+                                Command="{Binding Path=StepCommand}"
+                                Content="Step"/>
+
+                        <Button Grid.Column="1"
+                                Grid.Row="1"
+                                Margin="3,3,0,0"
+                                Command="{Binding Path=ResetCommand}"
+                                Content="Reset"/>
                     </Grid>
 
                     <!--Speed-->
@@ -41,8 +60,15 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Speed:</Label>
-                        <Slider x:Name="sliderSpeed" Grid.Column="1" VerticalAlignment="Center"/>
+                        <Label Grid.Column="0" 
+                               HorizontalAlignment="Left"
+                               Content="Speed:"/>
+
+                        <Slider Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Minimum="{Binding Path=MinSpeed}"
+                                Maximum="{Binding Path=MaxSpeed}"
+                                Value="{Binding Path=Speed}"/>
                     </Grid>
 
                     <!--Delay-->
@@ -52,8 +78,13 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Delay:</Label>
-                        <Label x:Name="labelDelay" Grid.Column="1" HorizontalAlignment="Right">XX ms</Label>
+                        <Label Grid.Column="0" 
+                               HorizontalAlignment="Left"
+                               Content="Delay:"/>
+
+                        <Label Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               Content="{Binding Path=DelayLabel}"/>
                     </Grid>
 
                     <!--Array Accesses-->
@@ -63,8 +94,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Accesses:</Label>
-                        <Label x:Name="labelArrayAccesses" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                        <Label Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               Content="Array Accesses:"/>
+
+                        <Label Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               Content="{Binding Path=ArrayAccessesLabel}"/>
                     </Grid>
 
                     <!--Comparsions-->
@@ -74,24 +110,34 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Comparsions:</Label>
-                        <Label x:Name="labelComparsions" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                        <Label Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               Content="Comparsions:"/>
+
+                        <Label Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               Content="{Binding Path=ComparsionsLabel}"/>
                     </Grid>
 
-                    <!--Swaps-->
+                    <!--Array Writes-->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Writes:</Label>
-                        <Label x:Name="labelArrayWrites" Grid.Column="1" HorizontalAlignment="Right">0</Label>
+                        <Label Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               Content="Array Writes:"/>
+
+                        <Label Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               Content="{Binding Path=ArrayWritesLabel}"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Input and Algorithm" Padding="2, 6, 2, 2">
+            <GroupBox Padding="2, 6, 2, 2" Header="Input and Algorithm">
                 <DockPanel>
                     <!--Input Type-->
                     <Grid DockPanel.Dock="Top">
@@ -100,9 +146,17 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Input Type:</Label>
+                        <Label Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               Content="Input Type:"/>
 
-                        <ComboBox x:Name="comboBoxInputType" Grid.Column="1" HorizontalAlignment="Right" Width="115" SelectedIndex="2"/>
+                        <ComboBox Grid.Column="1"
+                                  HorizontalAlignment="Right"
+                                  Width="115"
+                                  ItemsSource="{Binding Path=InputTypes}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Value"
+                                  SelectedItem="{Binding Path=SelectedInputType}"/>
                     </Grid>
 
                     <!--Array Size-->
@@ -113,20 +167,29 @@
                             <ColumnDefinition Width="36"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" HorizontalAlignment="Left">Array Size:</Label>
+                        <Label 
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            Content="Array Size:"/>
 
-                        <Slider 
-                        x:Name="sliderArraySize"
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        IsSnapToTickEnabled="True"
-                        TickFrequency="4"
-                    />
+                        <Slider Grid.Column="1"
+                                VerticalAlignment="Center"
+                                IsSnapToTickEnabled="True"
+                                TickFrequency="4"
+                                Minimum="{Binding Path=MinArraySize}"
+                                Maximum="{Binding Path=MaxArraySize}"
+                                Value="{Binding Path=ArraySize}"/>
 
-                        <Label x:Name="labelArraySize" Grid.Column="2" HorizontalAlignment="Right">1000</Label>
+                        <Label Grid.Column="2"
+                               HorizontalAlignment="Right"
+                               Content="{Binding Path=ArraySizeLabel}"/>
                     </Grid>
 
-                    <ListBox x:Name="listBoxAlgorithms"/>
+                    <ListBox ItemsSource="{Binding Path=SortingAlgorithms}"
+                             DisplayMemberPath="Key"
+                             SelectedValuePath="Value"
+                             SelectedItem="{Binding Path=SelectedSorter}"
+                             SelectedIndex="0"/>
                 </DockPanel>
             </GroupBox>
         </DockPanel>

@@ -22,7 +22,7 @@ namespace SortingVisualizer.Visualization
         public int Comparsions { get; private set; } = 0;
         public int ArrayWrites { get; private set; } = 0;
 
-        public event EventHandler StateChanged;
+        public event EventHandler CountersChanged;
 
         private int[] _array;
         private IEnumerator<SortStep> _sortEnumerator;
@@ -46,7 +46,7 @@ namespace SortingVisualizer.Visualization
         /// <summary>
         /// Stops visualization and resets array
         /// </summary>
-        public void Reset(int arraySize, InputType inputType) 
+        public void Reset(int arraySize, ArrayInputType inputType) 
         {
             Pause();
 
@@ -57,7 +57,7 @@ namespace SortingVisualizer.Visualization
             ArrayAccesses = 0;
             Comparsions = 0;
             ArrayWrites = 0;
-            StateChanged?.Invoke(this, EventArgs.Empty);
+            CountersChanged?.Invoke(this, EventArgs.Empty);
 
             Redraw();
         }
@@ -65,7 +65,7 @@ namespace SortingVisualizer.Visualization
         /// <summary>
         /// Stops visualization, resets array and sorting algorithm
         /// </summary>
-        public void Reset(int arraySize, InputType inputType, ISorter sorter)
+        public void Reset(int arraySize, ArrayInputType inputType, ISorter sorter)
         {
             Reset(arraySize, inputType);
 
@@ -75,7 +75,7 @@ namespace SortingVisualizer.Visualization
         /// <summary>
         /// Starts visualization in different thread
         /// </summary>
-        public void Run() 
+        public void Play() 
         {
             _sortEnumerator = _sortEnumerator ?? Sorter.Sort(_array);
 
@@ -84,7 +84,7 @@ namespace SortingVisualizer.Visualization
                 return;
             }
 
-            _visualizationThread = new Thread(ThreadRun);
+            _visualizationThread = new Thread(ThreadPlay);
             _visualizationStopEvent.Reset();
             _visualizationThread.Start();
         }
@@ -118,7 +118,7 @@ namespace SortingVisualizer.Visualization
                 ArrayAccesses += sortStep.ArrayAccesses;
                 Comparsions += sortStep.Comparsions;
                 ArrayWrites += sortStep.ArrayWrites;
-                StateChanged?.Invoke(this, EventArgs.Empty);
+                CountersChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -144,7 +144,7 @@ namespace SortingVisualizer.Visualization
             Visualizer.Visualize(sortStep);
         }
 
-        private void ThreadRun() 
+        private void ThreadPlay() 
         {
             if (_sortEnumerator is null) 
             {
@@ -189,17 +189,17 @@ namespace SortingVisualizer.Visualization
 
                 DrawStep(sortStep);
 
-                StateChanged?.Invoke(this, EventArgs.Empty);
+                CountersChanged?.Invoke(this, EventArgs.Empty);
 
                 stopwatch.Stop();
             }
 
-            RunFinishAnimation();
+            PlayFinishAnimation();
 
             _isRunning = false;
         }
 
-        private void RunFinishAnimation() 
+        private void PlayFinishAnimation() 
         {
             Stopwatch stopwatch = new Stopwatch();
             _isRunning = true;

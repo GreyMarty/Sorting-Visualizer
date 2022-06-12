@@ -3,7 +3,7 @@
 
 namespace SortingVisualizer.InputTypes
 {
-    public class InputTypeShuffledHead : InputType
+    public class InputTypeShuffledHead : ArrayInputType
     {
         public override void Generate(int[] array)
         {
