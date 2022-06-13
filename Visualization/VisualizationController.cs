@@ -4,6 +4,7 @@ using System.Threading;
 using System.Diagnostics;
 using SortingVisualizer.Sorting;
 using SortingVisualizer.InputTypes;
+using SortingVisualizer.Audio; 
 
 
 namespace SortingVisualizer.Visualization
@@ -16,6 +17,23 @@ namespace SortingVisualizer.Visualization
         public IVizualizer Visualizer { get; init; }
         public ISorter Sorter { get; private set; }
 
+        public bool SoundEnabled 
+        {
+            get 
+            {
+                return _soundEnabled;
+            }
+            set 
+            {
+                _soundEnabled = value;
+
+                if (!value) 
+                {
+                    _soundPlayer?.Pause();
+                }
+            }
+        }
+
         public int Delay { get; set; }
 
         public int ArrayAccesses { get; private set; } = 0;
@@ -23,6 +41,9 @@ namespace SortingVisualizer.Visualization
         public int ArrayWrites { get; private set; } = 0;
 
         public event EventHandler CountersChanged;
+        
+        private SortStepPlayer _soundPlayer;
+        private bool _soundEnabled = false;
 
         private int[] _array;
         private IEnumerator<SortStep> _sortEnumerator;
@@ -41,6 +62,8 @@ namespace SortingVisualizer.Visualization
             _array = new int[0];
 
             _visualizationStopEvent = new ManualResetEvent(false);
+
+            _soundPlayer = new SortStepPlayer();
         }
 
         /// <summary>
@@ -58,6 +81,8 @@ namespace SortingVisualizer.Visualization
             Comparsions = 0;
             ArrayWrites = 0;
             CountersChanged?.Invoke(this, EventArgs.Empty);
+
+            _soundPlayer.Pause();
 
             Redraw();
         }
@@ -95,6 +120,7 @@ namespace SortingVisualizer.Visualization
         public void Pause() 
         {
             _visualizationStopEvent.Set();
+            _soundPlayer.Pause();
         }
 
         /// <summary>
@@ -113,7 +139,7 @@ namespace SortingVisualizer.Visualization
             {
                 SortStep sortStep = _sortEnumerator.Current;
 
-                DrawStep(sortStep);
+                VisualizeStep(sortStep);
 
                 ArrayAccesses += sortStep.ArrayAccesses;
                 Comparsions += sortStep.Comparsions;
@@ -139,8 +165,13 @@ namespace SortingVisualizer.Visualization
             }
         }
 
-        private void DrawStep(SortStep sortStep) 
+        private void VisualizeStep(SortStep sortStep, bool sound=false) 
         {
+            if (sound) 
+            {
+                _soundPlayer.Play(sortStep);
+            }
+            
             Visualizer.Visualize(sortStep);
         }
 
@@ -187,7 +218,7 @@ namespace SortingVisualizer.Visualization
                     _sortEnumerator.MoveNext();
                 }
 
-                DrawStep(sortStep);
+                VisualizeStep(sortStep, SoundEnabled);
 
                 CountersChanged?.Invoke(this, EventArgs.Empty);
 
@@ -196,6 +227,7 @@ namespace SortingVisualizer.Visualization
 
             PlayFinishAnimation();
 
+            _soundPlayer.Pause();
             _isRunning = false;
         }
 
@@ -232,11 +264,12 @@ namespace SortingVisualizer.Visualization
 
                 arrayIndex += stepCount;
 
-                DrawStep(sortStep);
+                VisualizeStep(sortStep, SoundEnabled);
 
                 stopwatch.Stop();
             }
 
+            _soundPlayer.Pause();
             _isRunning = false;
         }
 
@@ -244,6 +277,7 @@ namespace SortingVisualizer.Visualization
         {
             Pause();
             Visualizer.Dispose();
+            _soundPlayer.Dispose();
         }
     }
 }

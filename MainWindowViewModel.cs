@@ -3,8 +3,6 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK.Wpf;
 using SortingVisualizer.InputTypes;
 using SortingVisualizer.Sorting;
@@ -41,6 +39,23 @@ namespace SortingVisualizer
             }
         }
         public string DelayLabel => $"{_delay} ms";
+
+        public bool SoundEnabled 
+        {
+            get 
+            {
+                return _visualizationController?.SoundEnabled ?? false;
+            }
+            set 
+            {
+                if (_visualizationController is not null) 
+                {
+                    _visualizationController.SoundEnabled = value;
+
+                    OnPropertyChanged(nameof(SoundEnabled));
+                }
+            }
+        }
 
         public string ArrayAccessesLabel => _visualizationController?.ArrayAccesses.ToString();
         public string ComparsionsLabel => _visualizationController?.Comparsions.ToString();
