@@ -3,7 +3,7 @@
 
 namespace SortingVisualizer.Audio
 {
-    public class SineWaveProvider : ISampleProvider
+    public class TriangleWaveProvider : ISampleProvider
     {
         public int Frequency 
         {
@@ -32,7 +32,7 @@ namespace SortingVisualizer.Audio
         private uint _offset = 0;
 
 
-        public SineWaveProvider() 
+        public TriangleWaveProvider() 
         {
             Frequency = 1000;
             Volume = 0.1f;
@@ -47,7 +47,7 @@ namespace SortingVisualizer.Audio
 
             if (_seekPhase)
             {
-                // Calculate new phase so that sine wave doesn't interrupt
+                // Calculate new phase so that wave doesn't interrupt
                 _phase = dt * _previousFrequency * _offset + _previousPhase - dt * frequency * _offset;
                 
                 _previousFrequency = _frequency;
@@ -57,7 +57,7 @@ namespace SortingVisualizer.Audio
 
             for (int i = 0; i < buffer.Length; i++) 
             {
-                buffer[i] = (short)(volume * short.MaxValue * Math.Sin(dt * frequency * _offset + _phase));
+                buffer[i] = (short)(volume * short.MaxValue * 2f / Math.PI * Math.Asin(Math.Sin(dt * frequency * _offset + _phase)));
 
                 _offset++;
             }

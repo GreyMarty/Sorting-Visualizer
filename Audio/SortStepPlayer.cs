@@ -14,12 +14,12 @@ namespace SortingVisualizer.Audio
         private const int MaxFrequency = 1200;
 
         private StreamSoundPlayer _streamSoundPlayer;
-        private SineWaveProvider _sampleProvider;
+        private TriangleWaveProvider _sampleProvider;
 
 
         public SortStepPlayer() 
         {
-            _sampleProvider = new SineWaveProvider();
+            _sampleProvider = new TriangleWaveProvider();
             _streamSoundPlayer = new StreamSoundPlayer(_sampleProvider);
         }
 
