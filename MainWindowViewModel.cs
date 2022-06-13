@@ -197,7 +197,7 @@ namespace SortingVisualizer
 
         private void Close() 
         {
-
+            _visualizationController?.Dispose();
         }
 
         private void OnPropertyChanged(string? propertyName) 

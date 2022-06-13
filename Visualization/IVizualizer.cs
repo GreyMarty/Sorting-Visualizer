@@ -1,4 +1,5 @@
-﻿using SortingVisualizer.Sorting;
+﻿using System;
+using SortingVisualizer.Sorting;
 
 
 namespace SortingVisualizer.Visualization
@@ -6,7 +7,7 @@ namespace SortingVisualizer.Visualization
     /// <summary>
     /// Defines methods for sorting visualization
     /// </summary>
-    public interface IVizualizer
+    public interface IVizualizer : IDisposable
     {
         public void Visualize(int[] array);
 

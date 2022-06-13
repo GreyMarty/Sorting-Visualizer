@@ -5,6 +5,7 @@ using System.Windows;
 using SortingVisualizer.Sorting;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
+using System.Threading.Tasks;
 
 namespace SortingVisualizer.Visualization
 {
@@ -40,7 +41,7 @@ namespace SortingVisualizer.Visualization
 
         ~OpenGLVisualizer() 
         {
-            GLControl.Render -= GLControl_Render;
+            Dispose();
         }
 
         public void Visualize(int[] array)
@@ -54,7 +55,20 @@ namespace SortingVisualizer.Visualization
         {
             _currentState = sortState;
 
-            GLControl.Dispatcher.Invoke(GLControl.InvalidateVisual);
+            try
+            {
+                GLControl.Dispatcher.Invoke(GLControl.InvalidateVisual);
+            }
+            catch (TaskCanceledException ex) { }
+        }
+
+        public void Dispose() 
+        {
+            GL.DeleteBuffer(_vertexBufferObject);
+            GL.DeleteVertexArray(_vertexArrayObject);
+
+            GLControl.Loaded -= GLControl_Loaded;
+            GLControl.Render -= GLControl_Render;
         }
 
         private void GenerateBuffer() 

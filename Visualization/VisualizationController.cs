@@ -11,7 +11,7 @@ namespace SortingVisualizer.Visualization
     /// <summary>
     /// Provides methods for visualization control
     /// </summary>
-    public class VisualizationController
+    public class VisualizationController : IDisposable
     {
         public IVizualizer Visualizer { get; init; }
         public ISorter Sorter { get; private set; }
@@ -238,6 +238,12 @@ namespace SortingVisualizer.Visualization
             }
 
             _isRunning = false;
+        }
+
+        public void Dispose()
+        {
+            Pause();
+            Visualizer.Dispose();
         }
     }
 }
