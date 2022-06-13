@@ -41,11 +41,12 @@ namespace SortingVisualizer.Sorting
 
                 if (array[j] < pivot)
                 {
+                    i++;
+
                     step.ChangedIndices.Add(i);
                     step.ChangedIndices.Add(j);
                     yield return step;
 
-                    i++;
                     Swap(ref array[i], ref array[j]);
                 }
                 else 
