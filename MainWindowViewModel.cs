@@ -187,6 +187,7 @@ namespace SortingVisualizer
 
             _visualizationController = new VisualizationController(new OpenGLVisualizer(GLWpfControl), _sorter);
             _visualizationController.CountersChanged += _visualizationController_CountersChanged;
+            _visualizationController.Delay = _delay;
             Reset();
         }
 
