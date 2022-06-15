@@ -115,6 +115,11 @@ namespace SortingVisualizer
             { "Radix Sort", Sorters.RadixSort },
             { "Quick Sort", Sorters.QuickSort },
             { "Hoare's Quick Sort", Sorters.HoareQuickSort },
+            { "Heap Sort", Sorters.HeapSort },
+            { "Shell Sort", Sorters.ShellSort },
+            { "Tim Sort", Sorters.TimSort },
+            { "CombSort", Sorters.CombSort },
+            { "Pigeonhole Sort", Sorters.PigeonholeSort } 
         };
 
         public KeyValuePair<string, ISorter> SelectedSorter 

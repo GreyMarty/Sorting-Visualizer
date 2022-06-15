@@ -52,7 +52,7 @@ namespace SortingVisualizer.Visualization
         private Thread _visualizationThread;
         private ManualResetEvent _visualizationStopEvent;
 
-        private const int TargetArraySize = 512;
+        private const int TargetArraySize = 256;
 
         public VisualizationController(IVizualizer vizualizer, ISorter sorter)
         {
